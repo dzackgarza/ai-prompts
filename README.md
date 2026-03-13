@@ -25,3 +25,7 @@ uvx --from git+https://github.com/dzackgarza/ai-prompts.git ai-prompts get inter
 
 - `uv sync --group dev`
 - `uv run pytest`
+
+---
+
+[![Ko-Fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I2I57UKJ8)
