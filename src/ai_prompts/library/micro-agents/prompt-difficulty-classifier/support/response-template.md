@@ -1,3 +1,4 @@
+<!-- router:tier={{ tier }} -->
 {% if probe_prompt %}
 Routing classification: **{{ tier }}**
 Routing verification token: `{{ passcode }}`

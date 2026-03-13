@@ -18,8 +18,10 @@ dependencies = [
 [dependency-groups]
 dev = [
   "llm-templating-engine @ git+https://github.com/dzackgarza/llm-templating-engine.git",
+  "mypy>=1.19.1",
   "pytest>=9.0.0",
   "tiktoken>=0.11.0",
+  "types-pyyaml>=6.0.12.20250915",
 ]
 
 [project.scripts]

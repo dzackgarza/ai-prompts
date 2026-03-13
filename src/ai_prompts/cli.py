@@ -33,7 +33,7 @@ def get_command(
     try:
         prompt = get_prompt(slug)
     except PromptNotFoundError as exc:
-        raise typer.Exit(str(exc)) from exc
+        raise typer.Exit(1) from exc
     if json_output:
         typer.echo(json.dumps(prompt.to_dict(), indent=2))
         return
