@@ -66,12 +66,67 @@ system_template:
     - `edits` should mention the file or target changed and why it was changed.
 inputs:
 - name: transcript
-  description: Full markdown transcript rendered from opencode-manager
+  description: Structured transcript JSON rendered from opencode-manager
   required: true
 ---
 
+{% macro truncate_block(text, head=350, tail=175) -%}
+{%- set cleaned = (text or "") | trim -%}
+{%- if not cleaned -%}
+(empty)
+{%- elif cleaned | length <= (head + tail + 40) -%}
+{{ cleaned }}
+{%- else -%}
+{{ cleaned[:head] }}
+
+...[truncated {{ cleaned | length - head - tail }} chars]...
+
+{{ cleaned[-tail:] }}
+{%- endif -%}
+{%- endmacro %}
+
 Analyze this transcript and return the structured summary described in the schema.
+Only the rendered transcript below is part of the model input; the bound JSON object is
+not shown directly.
 
 <transcript>
-{{ transcript }}
+Session ID: {{ transcript.sessionID }}
+Title: {{ transcript.title }}
+Directory: {{ transcript.directory }}
+
+{% for turn in transcript.turns %}
+Turn {{ turn.index }} (duration {{ turn.duration }})
+User prompt:
+{{ turn.userPrompt }}
+
+{% for message in turn.assistantMessages %}
+Assistant message {{ message.index }} (finish {{ message.finish }}, duration {{ message.duration }})
+{% if message.reasoning %}
+Reasoning:
+{% for reasoning in message.reasoning %}
+- {{ reasoning }}
+{% endfor %}
+{% endif %}
+{% for step in message.steps %}
+Step {{ step.index }}: {{ step.heading }} (duration {{ step.duration }})
+{% if step.type == "tool" %}
+Tool: {{ step.tool }}
+Status: {{ step.status }}
+Input:
+{{ truncate_block(step.inputText) }}
+{% if step.outputText %}
+Output:
+{{ truncate_block(step.outputText) }}
+{% endif %}
+{% else %}
+{{ step.contentText }}
+{% endif %}
+{% endfor %}
+{% if message.text %}
+Assistant reply:
+{{ message.text }}
+{% endif %}
+
+{% endfor %}
+{% endfor %}
 </transcript>

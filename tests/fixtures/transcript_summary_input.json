@@ -1,0 +1,65 @@
+{
+  "sessionID": "ses_summary_fixture",
+  "title": "Summarize a delegated transcript",
+  "directory": "/repo",
+  "turns": [
+    {
+      "index": 1,
+      "duration": "37.000s",
+      "userPrompt": "Read README.md, inspect a config file, and report what changed.",
+      "assistantMessages": [
+        {
+          "index": 1,
+          "finish": "tool-calls",
+          "duration": "4.500s",
+          "reasoning": [
+            "Need the README heading before changing the config.",
+            "The final answer must explain both the inspection and the edit."
+          ],
+          "text": "I verified the heading, updated the config, and confirmed the new value.",
+          "steps": [
+            {
+              "index": 1,
+              "type": "tool",
+              "heading": "tool:read",
+              "duration": "0.015s",
+              "tool": "read",
+              "status": "completed",
+              "inputText": "{\n  \"filePath\": \"README.md\"\n}",
+              "outputText": "# OpenCode Plugins\n\nThis paragraph is filler to prove that the transcript prompt only keeps the head and tail of large tool outputs. This paragraph is filler to prove that the transcript prompt only keeps the head and tail of large tool outputs. This paragraph is filler to prove that the transcript prompt only keeps the head and tail of large tool outputs. This paragraph is filler to prove that the transcript prompt only keeps the head and tail of large tool outputs. This paragraph is filler to prove that the transcript prompt only keeps the head and tail of large tool outputs.\n\nTail marker README_END"
+            },
+            {
+              "index": 2,
+              "type": "reasoning",
+              "heading": "reasoning",
+              "duration": "0.040s",
+              "contentText": "The README heading matches the expected project title."
+            },
+            {
+              "index": 3,
+              "type": "tool",
+              "heading": "tool:edit",
+              "duration": "0.100s",
+              "tool": "edit",
+              "status": "completed",
+              "inputText": "{\n  \"filePath\": \"config.yml\",\n  \"oldString\": \"mode: old\",\n  \"newString\": \"mode: new\"\n}",
+              "outputText": "Applied 1 replacement."
+            },
+            {
+              "index": 4,
+              "type": "text",
+              "heading": "text",
+              "duration": "0.020s",
+              "contentText": "Done."
+            }
+          ],
+          "model": "should-not-appear",
+          "snapshot": "snapshot_abc"
+        }
+      ],
+      "tokens": {
+        "total": 9999
+      }
+    }
+  ]
+}

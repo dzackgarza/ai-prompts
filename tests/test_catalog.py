@@ -45,4 +45,5 @@ def test_transcript_summary_prompt_exposes_structured_output_contract() -> None:
         "edits",
         "outcome",
     ]
-    assert "{{ transcript }}" in prompt.text
+    assert "Session ID: {{ transcript.sessionID }}" in prompt.text
+    assert "{% macro truncate_block" in prompt.text

@@ -16,7 +16,11 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pytest>=9.0.0"]
+dev = [
+  "llm-templating-engine @ git+https://github.com/dzackgarza/llm-templating-engine.git",
+  "pytest>=9.0.0",
+  "tiktoken>=0.11.0",
+]
 
 [project.scripts]
 ai-prompts = "ai_prompts.cli:main"
