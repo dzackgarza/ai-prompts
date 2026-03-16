@@ -5,10 +5,10 @@ install:
     uv sync --group dev
 
 test:
-    uv run pytest
+    PROMPTS_DIR=prompts uv run pytest
 
 typecheck:
-    uv run mypy src
+    PROMPTS_DIR=prompts uv run mypy src
 
 check: typecheck test
 
