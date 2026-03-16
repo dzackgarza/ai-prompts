@@ -13,7 +13,7 @@ def test_list_prompts_returns_current_catalog() -> None:
     prompts = list_prompts()
     slugs = [prompt.slug for prompt in prompts]
 
-    assert len(prompts) == 54
+    assert len(prompts) == 56
     assert slugs[0] == "interactive-agents/interactive"
     assert slugs[-1] == "micro-agents/transcript-summary"
     assert "sub-agents/researcher" in slugs
