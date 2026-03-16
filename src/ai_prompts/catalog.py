@@ -37,8 +37,13 @@ class PromptEntry:
         return asdict(self)
 
 
-def _library_root():
-    return resources.files("ai_prompts").joinpath("library")
+def _library_root() -> Path:
+    # Try project root (dev mode)
+    dev_root = Path(__file__).parents[2] / "prompts"
+    if dev_root.is_dir():
+        return dev_root
+    # Fallback to package data
+    return Path(str(resources.files("ai_prompts").joinpath("library")))
 
 
 def _iter_prompt_files():

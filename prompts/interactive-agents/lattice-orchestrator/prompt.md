@@ -281,7 +281,8 @@ Subagents are execution workers only. You own sign-off and commit.
 2. If they failed, hallucinated, or produced trivial/reward-hacked work, **you must investigate**.
 3. Retrieve their full transcript. Every `Task` execution gives you a `sessionID`. Run:
    ```bash
-   opencode export <sessionID>
+   MANAGER="npx --yes --package=git+https://github.com/dzackgarza/opencode-manager.git"
+   $MANAGER opx-session transcript <sessionID>
    ```
 4. Read the transcript completely to determine the root failures (did it get confused by the prompt? Did it skip the hard part? Did it hallucinate math?).
 5. Load `subagent-delegation`, then load `prompt-engineering`; if edits are needed, also load `git-guidelines` before changing files.
