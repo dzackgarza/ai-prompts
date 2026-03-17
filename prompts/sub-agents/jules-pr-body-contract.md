@@ -40,6 +40,8 @@ REQUIREMENTS
 - Update `.pr/PR_BODY.md` if the plan changes during implementation.
 - Do not create self-generated acceptance criteria — relay what the issue asks for.
 - If requirements are unclear, state what is unclear in the PR body.
+- Be outcome-first: describe what is true after the PR, not what code was written.
+- Do not claim completion without evidence.
 
 ==== PR BODY INSTRUCTIONS ====
 
