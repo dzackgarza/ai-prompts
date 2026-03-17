@@ -13,6 +13,12 @@ You are fixing an issue in a repository. Below is the issue description.
 
 {{ task }}
 
+{% if additional_context %}
+==== ADDITIONAL CONTEXT ====
+
+{{ additional_context }}
+{% endif %}
+
 ==== WORKFLOW ====
 
 Complete these steps in order:
