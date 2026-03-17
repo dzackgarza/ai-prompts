@@ -16,7 +16,11 @@ You are fixing an issue in a repository. Below is the issue description.
 {% if additional_context %}
 ==== ADDITIONAL CONTEXT ====
 
-{{ additional_context }}
+{% for ctx in additional_context %}
+=== {{ ctx.name }} ===
+
+{{ ctx.content }}
+{% endfor %}
 {% endif %}
 
 ==== WORKFLOW ====
