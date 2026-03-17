@@ -5,6 +5,20 @@ model: github-copilot/gpt-4.1
 name: Jules PR Body Contract
 ---
 
+CONTEXT
+
+You are producing a PR body that will be reviewed by the issue author or a technical reviewer.
+They will use the PR body to verify whether your changes address the issue.
+The PR body must be complete enough that they can verify correctness WITHOUT reading your code or running your tests.
+
+The issue below was filed by the repository maintainer. Your job is to address it.
+
+==== ISSUE ====
+
+{{ task }}
+
+==== PR BODY INSTRUCTIONS ====
+
 PR BODY CONTRACT
 
 The PR body is a contract, not a narrative summary.
