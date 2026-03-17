@@ -89,37 +89,6 @@ UPDATE RULES
 - If review feedback reveals a missing acceptance check, strengthen `.pr/PR_BODY.md` before marking the feedback addressed.
 - Every time `.pr/PR_BODY.md` changes, republish the PR body from that file.
 
-==== PR TEMPLATE ====
+==== YOUR TASK ====
 
-# Requested outcome
-
-<Externally observable result required by the issue.>
-
-# Non-goals
-
-- ...
-- ...
-
-# Acceptance checks
-
-- [ ] ...
-- [ ] ...
-- [ ] ...
-
-# Evidence to include
-
-- Acceptance check 1:
-  - Evidence:
-- Acceptance check 2:
-  - Evidence:
-- Acceptance check 3:
-  - Evidence:
-
-# Expected changed files
-
-- ...
-- ...
-
-# Blockers / open gaps
-
-- None.
+{{ task }}
