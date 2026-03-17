@@ -36,12 +36,13 @@ Complete these steps in order:
 REQUIREMENTS
 
 - Create `.pr/PR_BODY.md` BEFORE making any code changes.
-- The PR body is the source of truth for the GitHub PR description.
-- Update `.pr/PR_BODY.md` if the plan changes during implementation.
+- Write the PR body once — it is read-only for the rest of the session.
+- Do not modify the PR body after creation.
 - Do not create self-generated acceptance criteria — relay what the issue asks for.
 - If requirements are unclear, state what is unclear in the PR body.
 - Be outcome-first: describe what is true after the PR, not what code was written.
 - Do not claim completion without evidence.
+- When creating the PR, use the PR body text verbatim — do not modify it.
 
 ==== PR BODY INSTRUCTIONS ====
 
@@ -64,7 +65,3 @@ Your `.pr/PR_BODY.md` must contain:
 5. Blockers
    - Anything preventing completion.
    - Any unclear requirements.
-
-==== YOUR TASK ====
-
-{{ task }}
