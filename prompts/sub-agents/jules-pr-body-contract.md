@@ -5,68 +5,63 @@ model: github-copilot/gpt-4.1
 name: Jules PR Body Contract
 ---
 
-CONTEXT
+TASK
 
-You are producing a PR body that will be reviewed by the issue author or a technical reviewer.
-They will use the PR body to verify whether your changes address the issue.
-The PR body must be complete enough that they can verify correctness WITHOUT reading your code or running your tests.
-
-The issue below was filed by the repository maintainer. Your job is to address it.
+You are fixing an issue in a repository. Below is the issue description.
 
 ==== ISSUE ====
 
 {{ task }}
 
+==== WORKFLOW ====
+
+Complete these steps in order:
+
+1. RESEARCH: Understand the codebase, read relevant files, understand the existing implementation.
+
+2. PLAN: Create a plan for addressing the issue. Identify what files need to change and how.
+
+3. CREATE PR BODY: Before editing any files, create `.pr/PR_BODY.md` that describes:
+   - What the issue asks for (relay the requirements)
+   - What you will do to address it
+   - How you will verify the changes work
+   - Any blockers or open questions
+
+4. IMPLEMENT: Make the necessary changes to address the issue.
+
+5. VERIFY: Run tests, verify the changes work as expected.
+
+6. COMPLETE: Finalize the PR body and submit.
+
+REQUIREMENTS
+
+- Create `.pr/PR_BODY.md` BEFORE making any code changes.
+- The PR body is the source of truth for the GitHub PR description.
+- Update `.pr/PR_BODY.md` if the plan changes during implementation.
+- Do not create self-generated acceptance criteria — relay what the issue asks for.
+- If requirements are unclear, state what is unclear in the PR body.
+
 ==== PR BODY INSTRUCTIONS ====
 
-PR BODY CONTRACT
-
-The PR body is a contract, not a narrative summary.
-Its job is to let a reviewer verify, from the issue and the branch alone, whether the PR delivers the requested outcome.
-
-You must create `.pr/PR_BODY.md` before substantive implementation and use it as the sole source for the GitHub PR body.
-
-The PR body must contain these sections:
+Your `.pr/PR_BODY.md` must contain:
 
 1. Requested outcome
-   - Restate the issue as an externally observable outcome.
-   - State what the repository/user/system can do after this PR that it could not do before.
-   - Do not describe code structure here.
-   - Do not describe your effort or process here.
+   - What the issue asks for, stated as an externally observable result.
 
 2. Requirements from issue
-   - Extract and list ALL explicit requirements stated in the issue.
-   - Include every item, bullet point, or condition mentioned.
-   - Do NOT create new acceptance criteria — relay what was asked.
-   - If requirements are vague, state them as-is and ask for clarification in "Blockers".
+   - Extract and list ALL explicit requirements from the issue.
+   - Do NOT add new requirements — relay what was asked.
 
-3. What was done
-   - Briefly describe what changes were made to address the requirements.
-   - Focus on outcome, not process.
+3. Implementation plan
+   - What files will change and how.
 
 4. Verification
-   - For each requirement from the issue, state how it was verified.
-   - Include specific evidence: commands run, output observed, tests passed.
-   - If a requirement was not addressed, state it explicitly.
+   - How you will verify the changes work.
+   - Include specific commands or tests.
 
-5. Blockers / open gaps
-   - List anything that prevents truthful completion.
-   - If requirements are unclear or incomplete, state what is missing.
-   - If no blockers, say so explicitly.
-
-PR BODY RULES
-
-- The PR body must be outcome-first, not process-first.
-- The PR body must describe what is true after the PR, not what code was written.
-- The PR body must NOT contain self-generated acceptance criteria.
-- The job of Jules is to RELAY requirements, not CREATE criteria.
-- Reviewers supply the acceptance criteria; Jules verifies and reports.
-
-UPDATE RULES
-
-- If implementation changes what can truthfully be claimed, update `.pr/PR_BODY.md` first.
-- If review feedback reveals missing requirements, update `.pr/PR_BODY.md` before marking feedback addressed.
-- Every time `.pr/PR_BODY.md` changes, republish the PR body from that file.
+5. Blockers
+   - Anything preventing completion.
+   - Any unclear requirements.
 
 ==== YOUR TASK ====
 
