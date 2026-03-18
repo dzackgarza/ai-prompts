@@ -11,7 +11,7 @@ from typing import Any
 import yaml
 
 
-_PROMPT_ROOTS = ("interactive-agents", "sub-agents", "micro-agents")
+_PROMPT_ROOTS = ("interactive-agents", "sub-agents", "micro-agents", "system")
 _INCLUDE_RE = re.compile(r"""{%\s*include\s+['"](.+?)['"]\s*%}""")
 
 
@@ -38,6 +38,7 @@ class PromptEntry:
 
 
 import os
+
 
 def _library_root():
     # Use environment override if provided
@@ -70,7 +71,10 @@ def _resource_for_slug(slug: str):
     if not normalized:
         raise PromptNotFoundError("Prompt slug must not be empty.")
     root = _library_root()
-    for candidate in (root.joinpath(f"{normalized}.md"), root.joinpath(normalized, "prompt.md")):
+    for candidate in (
+        root.joinpath(f"{normalized}.md"),
+        root.joinpath(normalized, "prompt.md"),
+    ):
         if candidate.is_file():
             return candidate
     raise PromptNotFoundError(f"Unknown prompt slug: {slug}")
@@ -104,7 +108,9 @@ def _expand_includes(body: str, resource, seen: set[str]) -> str:
         if include_key in seen:
             raise ValueError(f"Cyclic prompt include detected: {include_name}")
         if not include_resource.is_file():
-            raise PromptNotFoundError(f"Included prompt resource not found: {include_name}")
+            raise PromptNotFoundError(
+                f"Included prompt resource not found: {include_name}"
+            )
         include_text = include_resource.read_text()
         _, include_body = _split_frontmatter(include_text)
         return _expand_includes(include_body, include_resource, seen | {include_key})
