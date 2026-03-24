@@ -34,3 +34,43 @@ uvx --from git+https://github.com/dzackgarza/ai-prompts.git ai-prompts get inter
 ```bash
 just check
 ```
+
+## Workflow
+
+### Adding a New Prompt
+
+1. Create the template in `prompts/` with YAML frontmatter and Jinja2 body
+2. Use relative paths from the template location: `{% include "../../system/modules/..." %}`
+3. Place shared guidelines in `prompts/system/modules/`
+
+### Testing Locally
+
+```bash
+# Render a template and verify includes expand
+export PROMPTS_DIR=prompts
+echo '{"template": {"path": "/path/to/prompt.md"}, "bindings": {"data": {}}}' > /tmp/render.json
+uvx --from git+https://github.com/dzackgarza/llm-templating-engine.git llm-template-render \
+  --input /tmp/render.json --output /tmp/response.json
+
+# Check output
+cat /tmp/response.json | jq '.rendered.document'
+```
+
+### Publishing
+
+```bash
+git add <your-files>
+git commit -m "add: description"
+git push
+```
+
+Then retrieve via uvx:
+
+```bash
+uvx --from git+https://github.com/dzackgarza/ai-prompts.git ai-prompts get <slug>
+```
+
+### Important Notes
+
+- **Includes must be in the body**, not in frontmatter fields like `system_template`. The engine only processes the body through Jinja2.
+- Use relative paths from the template's directory: `../../system/modules/guidelines.md`
