@@ -1,99 +1,137 @@
 set fallback := true
+repo_root := justfile_directory()
+python_qc_justfile := "/home/dzack/ai/quality-control/justfile"
+
 default:
-@just --list
+    @just test
 
 install:
-uv sync --group dev
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd "{{repo_root}}"
+    exec uv sync --group dev
 
-test:
-PROMPTS_DIR=prompts uv run pytest
+[private]
+_format:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd "{{repo_root}}"
+    exec uv run ruff format .
 
-typecheck:
-PROMPTS_DIR=prompts uv run mypy src
+[private]
+_lint:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd "{{repo_root}}"
+    exec uv run ruff check .
 
-check: typecheck test
+[private]
+_typecheck:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd "{{repo_root}}"
+    exec env PROMPTS_DIR=prompts uv run mypy src
+
+[private]
+_quality-control:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd "{{repo_root}}"
+    exec env PROMPTS_DIR=prompts just --justfile "{{python_qc_justfile}}" --working-directory "{{repo_root}}" test
+
+test: _lint _typecheck _quality-control
+
+check: test
 
 build:
-uv build
+    uv build
 
-# Bump patch version, commit, and tag
 bump-patch: check
-uv version --bump patch
-git add pyproject.toml uv.lock
-git commit -m "chore: bump version to v$(uv version | awk '{print $2}')"
-git tag "v$(uv version | awk '{print $2}')"
+    uv version --bump patch
+    git add pyproject.toml uv.lock
+    git commit -m "chore: bump version to v$(uv version | awk '{print $2}')"
+    git tag "v$(uv version | awk '{print $2}')"
 
-# Bump minor version, commit, and tag
 bump-minor: check
-uv version --bump minor
-git add pyproject.toml uv.lock
-git commit -m "chore: bump version to v$(uv version | awk '{print $2}')"
-git tag "v$(uv version | awk '{print $2}')"
+    uv version --bump minor
+    git add pyproject.toml uv.lock
+    git commit -m "chore: bump version to v$(uv version | awk '{print $2}')"
+    git tag "v$(uv version | awk '{print $2}')"
 
-# Push commits and tags to trigger CI release
 release: check
-git push && git push --tags
+    git push && git push --tags
 
-# Compile all agent templates to markdown files
 compile-agents:
-#!/usr/bin/env bash
-set -euo pipefail
+    #!/usr/bin/env python3
+    import json
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
 
-# Create output directory
-mkdir -p compiled-agents
+    prompts_dir = Path("prompts")
+    output_dir = Path("compiled-agents")
+    output_dir.mkdir(exist_ok=True)
+    os.environ["PROMPTS_DIR"] = str(prompts_dir)
 
-# Export PROMPTS_DIR for the templating engine
-export PROMPTS_DIR="prompts"
+    template_dirs = [
+        prompts_dir / "interactive-agents",
+        prompts_dir / "sub-agents",
+    ]
 
-# Process interactive-agents
-for template in prompts/interactive-agents/*.md; do
-name=$(basename "$template" .md)
-echo "Rendering $template..."
+    rendered_count = 0
+    failed = []
 
-# Create JSON request with actual template path
-cat > "/tmp/render-request-$name.json" << EOF
-{
-"template": {
-"path": "$template"
-},
-"bindings": {
-"data": {}
-}
-}
-EOF
+    for template_dir in template_dirs:
+        if not template_dir.exists():
+            print(f"Skipping {template_dir} (does not exist)")
+            continue
 
-uvx --from git+https://github.com/dzackgarza/llm-templating-engine.git llm-template-render \
---input "/tmp/render-request-$name.json" \
---output "/tmp/render-response-$name.json"
+        for template_path in template_dir.glob("*.md"):
+            name = template_path.stem
+            print(f"Rendering {template_path}...")
 
-# Extract the rendered document (frontmatter + body)
-jq -r '.rendered.document' "/tmp/render-response-$name.json" > "compiled-agents/$name.md"
-done
+            request = {
+                "template": {"path": str(template_path.absolute())},
+                "bindings": {"data": {}},
+            }
 
-# Process sub-agents
-for template in prompts/sub-agents/*.md; do
-name=$(basename "$template" .md)
-echo "Rendering $template..."
+            request_file = Path(f"/tmp/render-request-{name}.json")
+            response_file = Path(f"/tmp/render-response-{name}.json")
+            request_file.write_text(json.dumps(request, indent=2))
 
-# Create JSON request with actual template path
-cat > "/tmp/render-request-$name.json" << EOF
-{
-"template": {
-"path": "$template"
-},
-"bindings": {
-"data": {}
-}
-}
-EOF
+            result = subprocess.run(
+                [
+                    "uvx",
+                    "--from",
+                    "git+https://github.com/dzackgarza/llm-templating-engine.git",
+                    "llm-template-render",
+                    "--input",
+                    str(request_file),
+                    "--output",
+                    str(response_file),
+                ],
+                capture_output=True,
+                text=True,
+            )
 
-uvx --from git+https://github.com/dzackgarza/llm-templating-engine.git llm-template-render \
---input "/tmp/render-request-$name.json" \
---output "/tmp/render-response-$name.json"
+            if result.returncode != 0:
+                print(f"  ERROR: {result.stderr}")
+                failed.append(name)
+                continue
 
-# Extract the rendered document (frontmatter + body)
-jq -r '.rendered.document' "/tmp/render-response-$name.json" > "compiled-agents/$name.md"
-done
+            response = json.loads(response_file.read_text())
+            if "error" in response:
+                print(f"  ERROR: {response['error']['message']}")
+                failed.append(name)
+                continue
 
-echo "Compiled agents written to compiled-agents/"
-ls -la compiled-agents/
+            output_file = output_dir / f"{name}.md"
+            output_file.write_text(response["rendered"]["document"])
+            rendered_count += 1
+            print(f"  -> {output_file}")
+
+    print(f"\nRendered {rendered_count} templates to {output_dir}/")
+    if failed:
+        print(f"Failed: {', '.join(failed)}")
+        sys.exit(1)
