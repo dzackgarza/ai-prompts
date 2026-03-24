@@ -1,7 +1,7 @@
 ---
 name: Correction Finder (With Text)
 description: Find mathematical OCR/correction errors in provided text
-kind: llm-run
+mode: llmrun
 models:
 - google/gemini-2.5-flash
 temperature: 0.0
@@ -11,8 +11,7 @@ inputs:
   required: true
 include:
 - ../../system/modules/correction-finder-guidelines.md
-system_template:
-  text: 'You are an expert at finding OCR/correction errors in mathematical text.
+system_template: 'You are an expert at finding OCR/correction errors in mathematical text.
 
 {% include "../../system/modules/correction-finder-guidelines.md" %}
 
