@@ -41,8 +41,6 @@ _quality-control:
 
 test: _lint _typecheck _quality-control
 
-check: test
-
 build:
     uv build
 
