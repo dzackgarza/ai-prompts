@@ -6,10 +6,10 @@ models:
 - google/gemini-2.5-flash
 temperature: 0.0
 include:
-- ../../system/modules/correction-finder-guidelines.md
+- system/modules/correction-finder-guidelines.md
 system_template: 'You are an expert at finding OCR/correction errors in mathematical text.
 
-{% include "../../system/modules/correction-finder-guidelines.md" %}
+{% include "system/modules/correction-finder-guidelines.md" %}
 
 ## Your Role
 

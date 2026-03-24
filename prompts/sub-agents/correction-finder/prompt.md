@@ -10,10 +10,10 @@ inputs:
   description: The extracted text with line numbers pre-injected (L1:, L2:, etc.)
   required: true
 include:
-- ../../system/modules/correction-finder-guidelines.md
+- system/modules/correction-finder-guidelines.md
 system_template: 'You are an expert at finding OCR/correction errors in mathematical text.
 
-{% include "../../system/modules/correction-finder-guidelines.md" %}
+{% include "system/modules/correction-finder-guidelines.md" %}
 
 Below is the text to review:
 '
