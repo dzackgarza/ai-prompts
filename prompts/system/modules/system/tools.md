@@ -63,7 +63,7 @@ uvx git+https://github.com/dzackgarza/task-sched list
 For one-off tasks, use `at`:
 
 ```bash
-echo "opx chat --session ses_xxx --prompt 'continue work'" | at now + 30 minutes
+echo "uvx --from git+https://github.com/dzackgarza/opencode-manager.git ocm chat ses_xxx 'continue work'" | at now + 30 minutes
 ```
 
 ### Waking Your Own Session
@@ -74,7 +74,7 @@ After responding to a user, your actions halt immediately until you receive a ne
 
 ```bash
 # Get current session ID via introspection tool, then schedule a chat message:
-echo "npx --yes --package=git+https://github.com/dzackgarza/opencode-manager.git opx chat --session ses_XXXXXXXX --prompt 'continue the task'" | at now + 1 minute
+echo "uvx --from git+https://github.com/dzackgarza/opencode-manager.git ocm chat ses_XXXXXXXX 'continue the task'" | at now + 1 minute
 ```
 
 This sends a new prompt to your session at a fixed time, effectively waking you up to continue work.
