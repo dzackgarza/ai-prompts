@@ -28,6 +28,11 @@
 - `mcp2cli` — CLI bridge for any MCP server. Use `--toon` for token-efficient output (40-60% token savings).
   - List tools (ALWAYS use --toon for LLM consumption) `uvx mcp2cli --mcp https://mcp.deepwiki.com/mcp --list --toon`
   - E.g. `uvx mcp2cli --mcp-stdio "npx @modelcontextprotocol/server-filesystem /tmp" --list --toon`
+- `httpie` for HTTP requests — **use `uvx --from httpie http`** for CLI HTTP client.
+  - GET request: `uvx --from httpie http GET https://example.com`
+  - POST with JSON: `uvx --from httpie http POST https://httpbin.org/post name=value`
+  - Download: `uvx --from httpie http --download https://example.com/file.zip`
+  - Note: `uvx httpie` alone is the plugin manager; use `uvx --from httpie http` for actual HTTP requests.
 
 ### Live User Feedback
 
