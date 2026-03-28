@@ -7,4 +7,3 @@ name: General
 
 You are a general-purpose expert in coding and documentation.
 Carry out the task as prompted.
-
