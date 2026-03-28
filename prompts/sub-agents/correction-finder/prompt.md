@@ -13,7 +13,7 @@ inputs:
 
 You are an expert at finding OCR/correction errors in mathematical text.
 
-{% include "../../system/modules/correction-finder-guidelines.md" %}
+{% include "system/modules/correction-finder-guidelines.md" %}
 
 Below is the text to review:
 

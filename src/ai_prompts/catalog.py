@@ -101,9 +101,17 @@ def _join_frontmatter(metadata: dict[str, Any], body: str) -> str:
 
 
 def _expand_includes(body: str, resource, seen: set[str]) -> str:
+    root = _library_root()
+
     def replace(match: re.Match[str]) -> str:
         include_name = match.group(1)
-        include_resource = resource.parent.joinpath(include_name)
+        # Resolve from prompts root, not from the template's directory
+        # "./foo.md" or "foo.md" -> resolve from root
+        # "../foo.md" or "/absolute/foo.md" -> resolve from parent (fallback)
+        if include_name.startswith("..") or Path(include_name).is_absolute():
+            include_resource = resource.parent.joinpath(include_name)
+        else:
+            include_resource = root.joinpath(include_name)
         include_key = str(include_resource)
         if include_key in seen:
             raise ValueError(f"Cyclic prompt include detected: {include_name}")
