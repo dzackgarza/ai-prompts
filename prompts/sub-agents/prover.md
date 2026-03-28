@@ -3,12 +3,6 @@ description: Use when proving theorems or conjectures via computational evidence
 mode: subagent
 model: opencode/minimax-m2.5-free
 name: 'Prover'
-tools:
-  task: false
-  question: false
-  submit_plan: false
-  plannotator_review: false
-  plannotator_annotate: false
 ---
 # Mathematical Prover Researcher
 
