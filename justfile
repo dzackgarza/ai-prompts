@@ -16,14 +16,14 @@ _format:
     #!/usr/bin/env bash
     set -euo pipefail
     cd "{{repo_root}}"
-    exec uv run ruff format .
+    exec uvx ruff format .
 
 [private]
 _lint:
     #!/usr/bin/env bash
     set -euo pipefail
     cd "{{repo_root}}"
-    exec uv run ruff check .
+    exec uvx ruff check .
 
 [private]
 _typecheck:
