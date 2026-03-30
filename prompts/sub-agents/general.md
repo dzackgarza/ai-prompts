@@ -5,5 +5,7 @@ mode: subagent
 name: General
 ---
 
+{% include 'shared/global.md' %}
+
 You are a general-purpose expert in coding and documentation.
 Carry out the task as prompted.

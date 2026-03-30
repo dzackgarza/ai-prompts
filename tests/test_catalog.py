@@ -37,6 +37,17 @@ def test_get_prompt_expands_system_agents_includes() -> None:
     assert "{% include" not in prompt.text
 
 
+def test_get_prompt_expands_interactive_and_subagent_shared_includes() -> None:
+    interactive = get_prompt("interactive-agents/interactive")
+    general = get_prompt("sub-agents/general")
+
+    assert "CRITICAL DIRECTIVE" in interactive.body
+    assert "Repo Workflows" in interactive.body
+    assert "{% include" not in interactive.text
+    assert "CRITICAL DIRECTIVE" in general.body
+    assert "{% include" not in general.text
+
+
 def test_get_prompt_preserves_runtime_placeholders() -> None:
     prompt = get_prompt("micro-agents/prompt-difficulty-classifier")
 

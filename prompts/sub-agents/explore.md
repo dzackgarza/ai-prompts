@@ -7,6 +7,8 @@ model: github-copilot/gpt-4.1
 name: 'Researcher: Repo Explorer'
 ---
 
+{% include 'shared/global.md' %}
+
 # Repo Explorer Subagent
 
 ## Operating Rules (Hard Constraints)
