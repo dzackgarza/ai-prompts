@@ -18,6 +18,16 @@
 - `ctx7` for doc lookup.
   - Search for library and get ID: ` npx ctx7 library react "hooks"`
   - Fetch docs for specific library ID: `npx ctx7 docs /facebook/react "useEffect"`
+- TheoremSearch for mathematical results. This is the primary method for looking up known theorems and formal mathematical statements.
+  - Example:
+    ```bash
+    curl https://api.theoremsearch.com/search \
+      -H "Content-Type: application/json" \
+      -d '{
+            "query": "smooth DM stack codimension one",
+            "n_results": 5
+          }'
+    ```
 - `deepwiki` for speeding up doc exploration, locating relevant code quicker
   - `uvx mcp2cli --mcp https://mcp.deepwiki.com/mcp read-wiki-structure --repo-name facebook/react`
   - `uvx mcp2cli --mcp https://mcp.deepwiki.com/mcp ask-question --repo-name facebook/react --question "How does useEffect work?"`
