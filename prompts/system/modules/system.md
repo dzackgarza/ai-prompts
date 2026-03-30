@@ -1,5 +1,5 @@
 # System
 
-{% include './system/system-conventions.md' %}
+{% include 'system/modules/system/system-conventions.md' %}
 
-{% include './system/tools.md' %}
+{% include 'system/modules/system/tools.md' %}

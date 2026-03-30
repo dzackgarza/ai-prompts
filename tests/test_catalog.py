@@ -13,17 +13,27 @@ def test_list_prompts_returns_current_catalog() -> None:
     prompts = list_prompts()
     slugs = [prompt.slug for prompt in prompts]
 
-    assert len(prompts) == 56
-    assert slugs[0] == "interactive-agents/interactive"
-    assert slugs[-1] == "micro-agents/transcript-summary"
-    assert "sub-agents/researcher" in slugs
+    assert len(prompts) >= 60
+    assert slugs[0] == "interactive-agents/autonomous"
+    assert "interactive-agents/interactive" in slugs
+    assert "micro-agents/transcript-summary" in slugs
+    assert "sub-agents/general" in slugs
+    assert "system/AGENTS" in slugs
 
 
 def test_get_prompt_expands_support_includes_without_leaking_include_tags() -> None:
-    prompt = get_prompt("sub-agents/researcher")
+    prompt = get_prompt("interactive-agents/lattice-orchestrator")
 
-    assert prompt.name == "Researcher: Documentation"
-    assert "Documentation Discovery Library" in prompt.body
+    assert prompt.name == "(Lattice) Orchestrator"
+    assert "Primary Failure Mode: No Commit Created" in prompt.body
+    assert "{% include" not in prompt.text
+
+
+def test_get_prompt_expands_system_agents_includes() -> None:
+    prompt = get_prompt("system/AGENTS")
+
+    assert prompt.name == "AGENTS.md"
+    assert "CRITICAL DIRECTIVE" in prompt.body
     assert "{% include" not in prompt.text
 
 

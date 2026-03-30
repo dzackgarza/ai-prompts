@@ -4,14 +4,14 @@ description: Baseline AGENTS.md template with modular includes
 mode: system
 ---
 
-{% include './modules/critical-directive.md' %}
+{% include 'system/modules/critical-directive.md' %}
 
-{% include './modules/hard-rules.md' %}
+{% include 'system/modules/hard-rules.md' %}
 
-{% include './modules/behavioral-guidelines.md' %}
+{% include 'system/modules/behavioral-guidelines.md' %}
 
-{% include './modules/system.md' %}
+{% include 'system/modules/system.md' %}
 
-{% include './modules/git-guidelines.md' %}
+{% include 'system/modules/git-guidelines.md' %}
 
-{% include './modules/misc.md' %}
+{% include 'system/modules/misc.md' %}

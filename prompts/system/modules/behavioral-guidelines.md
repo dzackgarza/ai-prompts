@@ -1,5 +1,5 @@
 # Behavioural Guidelines
 
-{% include './behavioral-guidelines/epistemic-integrity.md' %}
+{% include 'system/modules/behavioral-guidelines/epistemic-integrity.md' %}
 
-{% include './behavioral-guidelines/chat-responses.md' %}
+{% include 'system/modules/behavioral-guidelines/chat-responses.md' %}

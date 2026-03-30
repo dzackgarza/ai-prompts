@@ -1,7 +1,7 @@
 # Git Guidelines
 
-{% include './git-guidelines/git-workflow.md' %}
+{% include 'system/modules/git-guidelines/git-workflow.md' %}
 
-{% include './git-guidelines/issues.md' %}
+{% include 'system/modules/git-guidelines/issues.md' %}
 
-{% include './git-guidelines/prs.md' %}
+{% include 'system/modules/git-guidelines/prs.md' %}

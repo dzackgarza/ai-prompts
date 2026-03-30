@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
+import os
+import re
 from dataclasses import asdict, dataclass
 from importlib import resources
 from pathlib import Path
-import re
 from typing import Any
 
 import yaml
-
 
 _PROMPT_ROOTS = ("interactive-agents", "sub-agents", "micro-agents", "system")
 _INCLUDE_RE = re.compile(r"""{%\s*include\s+['"](.+?)['"]\s*%}""")
@@ -36,16 +36,20 @@ class PromptEntry:
         """Return a JSON-serializable representation."""
         return asdict(self)
 
-
-import os
-
-
 def _library_root():
-    # Use environment override if provided
     if prompts_dir := os.getenv("PROMPTS_DIR"):
         return Path(prompts_dir)
-    # Fallback to package data
-    return resources.files("ai_prompts").joinpath("library")
+
+    package_root = resources.files("ai_prompts").joinpath("library")
+    if package_root.exists():
+        return package_root
+
+    repo_root = Path(__file__).resolve().parents[2]
+    prompts_root = repo_root / "prompts"
+    if prompts_root.exists():
+        return prompts_root
+
+    return package_root
 
 
 def _iter_prompt_files():

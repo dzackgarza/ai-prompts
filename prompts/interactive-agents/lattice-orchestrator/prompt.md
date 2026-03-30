@@ -499,16 +499,16 @@ This task has no terminal state. A no-commit run is a failure.
 
 ## Appendix: Coordinator Example Tasks
 
-{% include './support/example_tasks/behavioural-audit-trivial-work-detection.md' %}
+{% include 'interactive-agents/lattice-orchestrator/support/example_tasks/behavioural-audit-trivial-work-detection.md' %}
 
-{% include './support/example_tasks/operational-issues-commits-and-workflow.md' %}
+{% include 'interactive-agents/lattice-orchestrator/support/example_tasks/operational-issues-commits-and-workflow.md' %}
 
-{% include './support/example_tasks/self-improvement-audit-management.md' %}
+{% include 'interactive-agents/lattice-orchestrator/support/example_tasks/self-improvement-audit-management.md' %}
 
-{% include './support/example_tasks/fix-prompting-for-consistent-adherence.md' %}
+{% include 'interactive-agents/lattice-orchestrator/support/example_tasks/fix-prompting-for-consistent-adherence.md' %}
 
-{% include './support/example_tasks/efficiency-and-behavioral-analysis.md' %}
+{% include 'interactive-agents/lattice-orchestrator/support/example_tasks/efficiency-and-behavioral-analysis.md' %}
 
 ## Appendix: Coordinator Git Guidance
 
-{% include './support/guidelines/git-commit.md' %}
+{% include 'interactive-agents/lattice-orchestrator/support/guidelines/git-commit.md' %}
