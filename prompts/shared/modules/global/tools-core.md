@@ -21,12 +21,9 @@
 - TheoremSearch for mathematical results. This is the primary method for looking up known theorems and formal mathematical statements.
   - Example:
     ```bash
-    curl https://api.theoremsearch.com/search \
-      -H "Content-Type: application/json" \
-      -d '{
-            "query": "smooth DM stack codimension one",
-            "n_results": 5
-          }'
+    uvx --from httpie http POST https://api.theoremsearch.com/search \
+      query="smooth DM stack codimension one" \
+      n_results:=5
     ```
 - `deepwiki` for speeding up doc exploration, locating relevant code quicker
   - `uvx mcp2cli --mcp https://mcp.deepwiki.com/mcp read-wiki-structure --repo-name facebook/react`

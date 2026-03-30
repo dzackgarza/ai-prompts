@@ -299,7 +299,7 @@ Run these commands in parallel:
 
 ```bash
 # Filter ntfy to relevant timeframe - ALWAYS use 1h or 30m
-curl -s "https://ntfy.sh/dzg-lattice-doc-updates/json?poll=1&since=1h"
+uvx --from httpie http GET "https://ntfy.sh/dzg-lattice-doc-updates/json?poll=1&since=1h"
 
 # Check crontab to understand what should be running
 crontab -l

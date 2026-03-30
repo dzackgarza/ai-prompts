@@ -25,7 +25,7 @@ Do not treat agents like engineering projects or rule-based systems. Complex gat
 Run this command:
 
 ```bash
-curl -s "https://ntfy.sh/dzg-lattice-doc-updates/json?poll=1&since=all" | jq -c '{time: .time, title: .title, message: .message}'
+uvx --from httpie http GET "https://ntfy.sh/dzg-lattice-doc-updates/json?poll=1&since=all" | jq -c '{time: .time, title: .title, message: .message}'
 ```
 
 ### 2. Identify Recent SUCCESS Entry
