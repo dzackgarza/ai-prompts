@@ -2,10 +2,14 @@ import json
 from pathlib import Path
 
 import tiktoken
-from llm_templating_engine import Bindings, RenderTemplateRequest, TemplateReference, render_template
+from llm_templating_engine import (
+    Bindings,
+    RenderTemplateRequest,
+    TemplateReference,
+    render_template,
+)
 
 from ai_prompts.catalog import get_prompt
-
 
 FIXTURE_PATH = Path(__file__).parent / "fixtures" / "transcript_summary_input.json"
 

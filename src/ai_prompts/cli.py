@@ -8,7 +8,6 @@ import typer
 
 from ai_prompts import PromptNotFoundError, get_prompt, list_prompts
 
-
 app = typer.Typer(add_completion=False, no_args_is_help=True)
 
 
