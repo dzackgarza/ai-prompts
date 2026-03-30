@@ -9,7 +9,7 @@ temperature: 0.0
 
 You are an expert at finding OCR/correction errors in mathematical text.
 
-{% include "system/modules/correction-finder-guidelines.md" %}
+{% include "shared/correction-finder-guidelines.md" %}
 
 ## Your Role
 

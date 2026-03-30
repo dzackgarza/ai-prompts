@@ -13,12 +13,13 @@ def test_list_prompts_returns_current_catalog() -> None:
     prompts = list_prompts()
     slugs = [prompt.slug for prompt in prompts]
 
-    assert len(prompts) >= 60
+    assert len(prompts) >= 45
     assert slugs[0] == "interactive-agents/autonomous"
     assert "interactive-agents/interactive" in slugs
     assert "micro-agents/transcript-summary" in slugs
     assert "sub-agents/general" in slugs
     assert "system/AGENTS" in slugs
+    assert not any(slug.startswith("system/modules/") for slug in slugs)
 
 
 def test_get_prompt_expands_support_includes_without_leaking_include_tags() -> None:
@@ -40,12 +41,15 @@ def test_get_prompt_expands_system_agents_includes() -> None:
 def test_get_prompt_expands_interactive_and_subagent_shared_includes() -> None:
     interactive = get_prompt("interactive-agents/interactive")
     general = get_prompt("sub-agents/general")
+    correction_finder_ask = get_prompt("sub-agents/correction-finder-ask")
 
     assert "CRITICAL DIRECTIVE" in interactive.body
     assert "Repo Workflows" in interactive.body
     assert "{% include" not in interactive.text
     assert "CRITICAL DIRECTIVE" in general.body
     assert "{% include" not in general.text
+    assert "Strong evidence is required." in correction_finder_ask.body
+    assert "{% include" not in correction_finder_ask.text
 
 
 def test_get_prompt_preserves_runtime_placeholders() -> None:
