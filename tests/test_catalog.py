@@ -42,6 +42,7 @@ def test_get_prompt_expands_interactive_and_subagent_shared_includes() -> None:
     interactive = get_prompt("interactive-agents/interactive")
     general = get_prompt("sub-agents/general")
     correction_finder_ask = get_prompt("sub-agents/correction-finder-ask")
+    lattice_test_method_writer = get_prompt("sub-agents/lattice/lattice-test-method-writer")
 
     assert "CRITICAL DIRECTIVE" in interactive.body
     assert "Repo Workflows" in interactive.body
@@ -50,6 +51,9 @@ def test_get_prompt_expands_interactive_and_subagent_shared_includes() -> None:
     assert "{% include" not in general.text
     assert "Strong evidence is required." in correction_finder_ask.body
     assert "{% include" not in correction_finder_ask.text
+    assert "Coordinator Execution Contract" in lattice_test_method_writer.body
+    assert "BAD TESTS (Trivial/Useless):" in lattice_test_method_writer.body
+    assert "{% include" not in lattice_test_method_writer.text
 
 
 def test_get_prompt_preserves_runtime_placeholders() -> None:
