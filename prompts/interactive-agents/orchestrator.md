@@ -43,15 +43,7 @@ documents elsewhere in the repository.**
 
 {% include 'shared/modules/full-agent/continuation.md' %}
 
-{% set goals_path = '.agents/GOALS.md' %}
-{% set gaps_path = '.agents/GAPS.md' %}
-{% set plans_path = '.agents/plans/' %}
-{% set assess_state_creation_clause = 'If they do not exist, create them under `.agents/`.' %}
-{% set decision_locations = 'the active plan file, `.agents/GOALS.md`, or memory' %}
-{% set persistent_state_locations = 'memories, `.agents/plans/`, `.agents/GOALS.md`, and `.agents/GAPS.md`' %}
-{% set context_files_location = 'under the project-root `.agents/` directory' %}
-{% set operational_docs_root = '.agents/' %}
-{% include 'shared/modules/full-agent/autonomous-workflow.md' %}
+{% include 'shared/modules/full-agent/orchestrator-workflow.md' %}
 
 {% include 'shared/modules/full-agent/how-to-wait.md' %}
 

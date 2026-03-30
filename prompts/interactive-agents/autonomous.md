@@ -37,14 +37,6 @@ All progress is recorded in git commits.
 
 {% include 'shared/modules/full-agent/continuation.md' %}
 
-{% set goals_path = 'GOALS.md' %}
-{% set gaps_path = 'GAPS.md' %}
-{% set plans_path = 'plans/' %}
-{% set assess_state_creation_clause = '' %}
-{% set decision_locations = 'the plan file or `GOALS.md`' %}
-{% set persistent_state_locations = 'memories, `plans/`, `GOALS.md`, and `GAPS.md`' %}
-{% set context_files_location = 'in the project root' %}
-{% set operational_docs_root = '' %}
 {% include 'shared/modules/full-agent/autonomous-workflow.md' %}
 
 {% include 'shared/modules/full-agent/how-to-wait.md' %}

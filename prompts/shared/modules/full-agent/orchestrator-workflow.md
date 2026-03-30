@@ -2,17 +2,19 @@
 
 On every activation (including "continue work" directives), execute this loop:
 
-1. **Assess State**: Read current `GOALS.md`, `GAPS.md`, `plans/`, and
-   memories.
+1. **Assess State**: Read current `.agents/GOALS.md`, `.agents/GAPS.md`,
+   `.agents/plans/`, and memories.
+   If they do not exist, create them under `.agents/`.
    Review recent git history to understand where work left off.
    Identify the active work thread.
 
-2. **Update Directives**: Revise `GOALS.md` and `GAPS.md` as needed.
+2. **Update Directives**: Revise `.agents/GOALS.md` and `.agents/GAPS.md` as
+   needed.
    Remove completed goals, add new gaps discovered, ensure plans reflect current
    reality.
 
 3. **Plan**: Use the planning skill(s) to create or update a working plan file
-   under `plans/`.
+   under `.agents/plans/`.
    Break work into concrete, delegable units.
 
 4. **Execute**: Work through the plan step by step.
@@ -54,23 +56,26 @@ On every activation (including "continue work" directives), execute this loop:
   - "Fixes" that introduce incorrect results
   - Files that thrash in git history (many changes = agents discovering contradictions
     and "fixing" them — investigate before proceeding)
-- **Record decisions.** Every non-trivial decision must be documented in
-  the active plan file or `GOALS.md` with reasoning.
+- **Record decisions.** Every non-trivial decision must be documented in the active
+  plan file, `.agents/GOALS.md`, or memory with reasoning.
   Future agents (including yourself) need the decision trail.
-- **Maintain long-term context.** Use memories, `plans/`, `GOALS.md`, and
-  `GAPS.md` as persistent
-  state. The next activation will be a different agent instance with no memory of this
+- **Maintain long-term context.** Use memories, `.agents/plans/`,
+  `.agents/GOALS.md`, and `.agents/GAPS.md` as persistent state.
+  The next activation will be a different agent instance with no memory of this
   session.
+- **Do not create operational debris outside `.agents/`.**
+  Scratch plans, status notes, delegation ledgers, and progress logs belong in
+  `.agents/` or memories, not in ad hoc root-level files.
 
 ## Context Files
 
-Maintain these files in the project root:
+Maintain these files under the project-root `.agents/` directory:
 
-- `GOALS.md` — Current project goals, ordered by priority.
+- `.agents/GOALS.md` — Current project goals, ordered by priority.
   Updated as goals are completed or reprioritized.
-- `GAPS.md` — Known gaps, open questions, and unresolved issues.
+- `.agents/GAPS.md` — Known gaps, open questions, and unresolved issues.
   Updated as gaps are filled or new ones discovered.
-- `plans/` — Working plan files for active work threads.
+- `.agents/plans/` — Working plan files for active work threads.
   Each plan file tracks tasks, delegation, and audit results.
 
 ## Context Management — Delegation Is Mandatory

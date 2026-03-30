@@ -40,13 +40,23 @@ def test_get_prompt_expands_system_agents_includes() -> None:
 
 def test_get_prompt_expands_interactive_and_subagent_shared_includes() -> None:
     interactive = get_prompt("interactive-agents/interactive")
+    autonomous = get_prompt("interactive-agents/autonomous")
+    orchestrator = get_prompt("interactive-agents/orchestrator")
     general = get_prompt("sub-agents/general")
     correction_finder_ask = get_prompt("sub-agents/correction-finder-ask")
-    lattice_test_method_writer = get_prompt("sub-agents/lattice/lattice-test-method-writer")
+    lattice_test_method_writer = get_prompt(
+        "sub-agents/lattice/lattice-test-method-writer"
+    )
 
     assert "CRITICAL DIRECTIVE" in interactive.body
     assert "Repo Workflows" in interactive.body
     assert "{% include" not in interactive.text
+    assert autonomous.body.startswith("You are an Autonomous Project Agent.")
+    assert "{% set" not in autonomous.text
+    assert "GOALS.md" in autonomous.body
+    assert orchestrator.body.startswith("You are an Orchestrator Agent.")
+    assert "{% set" not in orchestrator.text
+    assert ".agents/GOALS.md" in orchestrator.body
     assert "CRITICAL DIRECTIVE" in general.body
     assert "{% include" not in general.text
     assert "Strong evidence is required." in correction_finder_ask.body
