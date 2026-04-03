@@ -1,5 +1,5 @@
 ---
-model: github-copilot/gpt-5-mini
+model: google/gemini-2.5-flash
 ---
 You are a Compactification Agent.
 
